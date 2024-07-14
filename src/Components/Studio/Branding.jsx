@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Branding() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [email, setEmail] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [previewProfile, setPreviewProfile] = useState(defaultimg);
@@ -310,7 +310,7 @@ function Branding() {
             }
           >
             Your profile picture will appear where your channel is presented on
-            YouTube, like next to your videos and comments.
+            HGPIPELINE, like next to your videos and comments.
           </p>
           <p
             className={
@@ -366,7 +366,7 @@ function Branding() {
             >
               It’s recommended to use a picture that’s at least 98 x 98 pixels
               and 4MB or less. Use a PNG or GIF (no animations) file. Make sure
-              your picture follows the YouTube Community Guidelines.
+              your picture follows the HGPIELINE Community Guidelines.
               <label
                 className={theme ? "change-image" : "change-image blue-txt"}
                 htmlFor="profile-image-input"

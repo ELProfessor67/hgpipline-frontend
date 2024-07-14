@@ -21,7 +21,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { MdOutlineAutoFixHigh } from "react-icons/md";
 
 function LeftPanel2() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [email, setEmail] = useState("");
   const token = localStorage.getItem("userToken");
   const [profileIMG, setProfileIMG] = useState();
@@ -181,7 +181,7 @@ function LeftPanel2() {
         >
           <Tooltip
             TransitionComponent={Zoom}
-            title="View channel on YouTube"
+            title="View channel on HGPIPELINE"
             placement="top"
           >
             <img
@@ -337,7 +337,7 @@ function LeftPanel2() {
         >
           <Tooltip
             TransitionComponent={Zoom}
-            title="View channel on YouTube"
+            title="View channel on HGPIPELINE"
             placement="top"
           >
             <img
@@ -520,7 +520,7 @@ function LeftPanel2() {
         >
           <Tooltip
             TransitionComponent={Zoom}
-            title="View channel on YouTube"
+            title="View channel on HGPIPELINE"
             placement="top"
           >
             <img

@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Basic() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [Email, setEmail] = useState("");
   const [channelName, setChannelName] = useState();
   const [channelDescription, setChannelDescription] = useState();
@@ -261,7 +261,7 @@ function Basic() {
             }
           >
             Choose a channel name that represents you and your content. Changes
-            made to your name and picture are visible only on YouTube.
+            made to your name and picture are visible only on HGPIPELINE.
           </p>
           {channelName === undefined ? (
             <input

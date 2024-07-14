@@ -37,7 +37,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { MdVideoLibrary } from "react-icons/md";
 
 function LeftPanel() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -216,6 +216,7 @@ function LeftPanel() {
       >
         <div className="first-section ">
           <div
+            title="Home"
             className={
               selected === "home"
                 ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
@@ -240,6 +241,51 @@ function LeftPanel() {
 
             <p>Home</p>
           </div>
+
+          <div
+            title="short"
+            className={
+              selected === "short"
+                ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                : "home sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "short");
+              window.location.href = "/short";
+            }}
+            style={{marginTop: "15px"}}
+          >
+            {selected === "short" ? (
+              <span
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+              // <HomeIcon
+              //   fontSize="medium"
+              //   style={{ color: theme ? "white" : "black" }}
+              // />
+            ) : (
+              <span
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+            )}
+
+            <p>Short</p>
+          </div>
+       
+
+
+
+          
+
+
+
+
           <div
             className={
               selected === "trending"
@@ -565,6 +611,7 @@ function LeftPanel() {
       >
         <div className="first-section ">
           <div
+          title="Home"
             className={
               selected === "home"
                 ? `home sec-data sec-data2 ${
@@ -590,7 +637,44 @@ function LeftPanel() {
               />
             )}
           </div>
+
+
           <div
+          title="Short"
+            className={
+              selected === "short"
+                ? `home sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
+                : "home sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "short");
+
+              window.location.href = "/short";
+            }}
+            style={{marginTop: "15px"}}
+          >
+            {selected === "short" ? (
+               <span
+               fontSize="medium"
+               style={{ color: theme ? "white" : "black" }}
+             >
+               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+             </span>
+            ) : (
+              <span
+              fontSize="medium"
+              style={{ color: theme ? "white" : "black" }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+            </span>
+            )}
+          </div>
+
+
+          <div
+          title="Trending"
             className={
               selected === "trending"
                 ? `trending trending2 sec-data sec-data2 ${
@@ -617,6 +701,7 @@ function LeftPanel() {
             )}
           </div>
           <div
+          title="Subscription"
             className={
               selected === "subscription"
                 ? `subscription subscription2 sec-data sec-data2 ${
@@ -650,6 +735,7 @@ function LeftPanel() {
         {/* <hr className="seperate" /> */}
         <div className="second-section">
           <div
+          title="Library"
             className={
               selected === "library"
                 ? `library library2 sec-data sec-data2 ${
@@ -680,6 +766,7 @@ function LeftPanel() {
             )}
           </div>
           <div
+          title="Watch Later"
             className={
               selected === "watch-later"
                 ? `watch-later watch-later2 sec-data sec-data2 ${
@@ -710,6 +797,7 @@ function LeftPanel() {
             )}
           </div>
           <div
+          title="Liked Video"
             className={
               selected === "liked-video"
                 ? `liked-video liked-video2 sec-data sec-data2 ${
@@ -766,6 +854,7 @@ function LeftPanel() {
 
               window.location.href = "/";
             }}
+            style={{marginTop: "15px"}}
           >
             {selected === "home" ? (
               <HomeIcon
@@ -779,6 +868,39 @@ function LeftPanel() {
               />
             )}
           </div>
+
+          <div
+            className={
+              selected === "short"
+                ? `home sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
+                : "home sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "short");
+
+              window.location.href = "/short";
+            }}
+            style={{marginTop: "15px"}}
+          >
+            {selected === "short" ? (
+              <span
+              fontSize="medium"
+              style={{ color: theme ? "white" : "black" }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+            </span>
+            ) : (
+              <span
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+            )}
+          </div>
+
           <div
             className={
               selected === "trending"
@@ -1043,6 +1165,7 @@ function LeftPanel() {
         >
           <div className="first-section ">
             <div
+            title="Home"
               className={
                 selected === "home"
                   ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
@@ -1066,6 +1189,38 @@ function LeftPanel() {
               )}
               <p>Home</p>
             </div>
+
+            <div
+            title="Short"
+              className={
+                selected === "short"
+                  ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                  : "home sec-data"
+              }
+              onClick={() => {
+                localStorage.setItem("selected", "short");
+                window.location.href = "/short";
+              }}
+              style={{marginTop: "15px"}}
+            >
+              {selected === "short" ? (
+                <span
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+              ) : (
+                <span
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+              )}
+              <p>Short</p>
+            </div>
+
             <div
               className={
                 selected === "trending"
@@ -1410,7 +1565,43 @@ function LeftPanel() {
 
             <p>Home</p>
           </div>
+
+
+
           <div
+            className={
+              theme ? "home-hori hori" : "home-hori hori text-light-mode"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "short");
+              window.location.href = "/short";
+            }}
+          >
+            {selected === "short" ? (
+              
+              <span
+              fontSize="28px"
+              color={theme ? "white" : "black"}
+              className="hor-icons"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+            ) : (
+              <span
+              fontSize="28px"
+              color={theme ? "white" : "black"}
+              className="hor-icons"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" fill="white" style={{pointerEvents: "none", display: "inherit", width: "100%", height: "100%"}}><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"></path></svg>
+              </span>
+            )}
+
+            <p>Short</p>
+          </div>
+
+
+
+          {/* <div
             className={
               theme
                 ? "trending-hori hori"
@@ -1435,7 +1626,7 @@ function LeftPanel() {
               />
             )}
             <p>Trending</p>
-          </div>
+          </div> */}
           <IoAddCircleOutline
             fontSize="50px"
             color={theme ? "white" : "black"}

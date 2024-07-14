@@ -11,7 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function Trending() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://backend.hgpipeline.com";
   const [trendingVideos, setTrendingVideos] = useState([]);
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -24,7 +24,7 @@ function Trending() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  document.title = "Trending - YouTube";
+  document.title = "Trending - HGPIPELINE";
 
   useEffect(() => {
     if (theme === false && !window.location.href.includes("/studio")) {
@@ -48,7 +48,7 @@ function Trending() {
     const getTrending = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/gettrending"
+          "https://backend.hgpipeline.com/gettrending"
         );
         const trending = await response.json();
         if (trending !== "NO DATA") {

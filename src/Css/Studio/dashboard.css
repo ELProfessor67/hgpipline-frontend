@@ -404,8 +404,10 @@
 .dash-dataimp > button {
   border: none;
   outline: none;
-  background-color: #3eaffe;
-  color: #282828;
+  /* background-color: #3eaffe;
+  color: #282828; */
+  background: #13D74C;
+  color: white;
   padding: 10px;
   padding-left: 16px;
   padding-right: 16px;

@@ -3,11 +3,15 @@ import "../Css/navbar.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Reset from "./Reset";
+import OtpInput from 'react-otp-input';
 
 function Signin(prop) {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [data, setData] = useState({});
   const [showReset, setShowReset] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [showOtp, setShowOtp] = useState(false);
+  const [hash, setHash] = useState({});
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
@@ -96,18 +100,55 @@ function Signin(prop) {
           "Content-Type": "application/json",
         },
       });
+      const { message, encrypted } = await response.json();
+
+     
+      
+      if (message === "OTP send to your email") {
+        setHash(encrypted);
+        setShowOtp(true);
+        console.log(encrypted)
+        toast.success(message)
+      } else if (message === "INVALID CREDENTIALS") {
+        InvalidNotify();
+      } else if (message === "USER DOESN'T EXIST") {
+        InvalidNotify();
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
+  const handleVeify = async (e) => {
+    e.preventDefault();
+    
+    try {
+
+      const data = {
+        hash,
+        otp
+      }
+      const response = await fetch(`${backendURL}/verify`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const { message, token } = await response.json();
-      if (message === "LOGIN SUCCESSFUL") {
+
+     
+      if (message === "Login Successfully") {
         LoginNotify();
         localStorage.setItem("userToken", token);
         setTimeout(() => {
           window.location.reload();
           document.body.classList.remove("bg-class");
         }, 2000);
-      } else if (message === "INVALID CREDENTIALS") {
-        InvalidNotify();
-      } else if (message === "USER DOESN'T EXIST") {
-        NoUserNotify();
+      }
+      else {
+        toast.error(message);
       }
     } catch (error) {
       alert(error.message);
@@ -122,52 +163,82 @@ function Signin(prop) {
       >
         <p className="signup-head">Login to Your Account</p>
         <p className="signup-desc">
-          Stay Connected-Stay Entertained, Step into the World of YouTube, Join
-          the YouTube Community
+          Stay Connected-Stay Entertained, Step into the World of HGPIPELINE, Join
+          the HGPIELINE Community
         </p>
       </div>
       <div
         className="signup-form"
         style={{ display: showReset ? "none" : "flex" }}
       >
-        <form onSubmit={SubmitData}>
-          <input
-            type="email"
-            name="email1"
-            className={
-              theme ? "email" : "email email-light light-mode text-light-mode"
-            }
-            placeholder="Email Address"
-            onChange={handleInputs}
-            required
-          />
-          <input
-            type="password"
-            name="password1"
-            className={
-              theme
-                ? "password"
-                : "password email-light light-mode text-light-mode"
-            }
-            placeholder="Passcode"
-            onChange={handleInputs}
-            required
-          />
-          <p
-            className={
-              theme ? "forgot-password" : "forgot-password text-light-mode"
-            }
-            onClick={() => setShowReset(true)}
-          >
-            Forgot password?
-          </p>
-          <button
-            className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
-            type="submit"
-          >
-            Login to Your Account
-          </button>
-        </form>
+        {
+          showOtp ?
+
+            (
+              <div>
+                <OtpInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={4}
+                  containerStyle={{ justifyContent: 'center' }}
+                  renderSeparator={<span>-</span>}
+                  renderInput={(props) => <input {...props} className={theme ? "input-box-dark" : "input-box-light"} />}
+
+                />
+
+                <p className="signup-desc" style={{fontSize: '1rem',margin: '1.5rem 0 0 0'}}>An OTP has been send to your email. Please check your inbox.</p>
+                <button
+                  className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
+                  type="submit"
+                  style={{ width: '100%', marginTop: "20px" }}
+                  onClick={handleVeify}
+                >
+                  Verify
+                </button>
+              </div>
+            ) :
+            (
+              <form onSubmit={SubmitData}>
+                <input
+                  type="email"
+                  name="email1"
+                  className={
+                    theme ? "email" : "email email-light light-mode text-light-mode"
+                  }
+                  placeholder="Email Address"
+                  onChange={handleInputs}
+                  required
+                />
+                <input
+                  type="password"
+                  name="password1"
+                  className={
+                    theme
+                      ? "password"
+                      : "password email-light light-mode text-light-mode"
+                  }
+                  placeholder="Password"
+                  onChange={handleInputs}
+                  required
+                />
+                <p
+                  className={
+                    theme ? "forgot-password" : "forgot-password text-light-mode"
+                  }
+                  onClick={() => setShowReset(true)}
+                >
+                  Forgot password?
+                </p>
+                <button
+                  className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
+                  type="submit"
+                >
+                  Login to Your Account
+                </button>
+              </form>
+            )
+        }
+
       </div>
       <div
         className="password-reset"

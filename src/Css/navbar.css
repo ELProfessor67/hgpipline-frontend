@@ -54,7 +54,7 @@
 
 .youtubeLogo,
 .youtubeLogo2 {
-  width: 110px;
+  width: 140px;
   cursor: pointer;
   padding-left: 30px;
   object-fit: cover;
@@ -383,7 +383,8 @@ form > input::placeholder {
 
 .signup-btn {
   cursor: pointer;
-  background-color: #c00;
+  /* background-color: #c00; */
+  background-color: #13d74c;
   color: white;
   border: none;
   font-family: "Geologica", sans-serif;
@@ -1030,4 +1031,33 @@ form > input::placeholder {
   .mobile-search-data {
     width: 90.6vw !important;
   }
+}
+
+
+.input-box-light
+{
+  width: 4rem !important;
+  height: 4rem;
+  color: white;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  background: gray;
+  margin: 0 1rem ;
+  outline: none;
+  border-radius: .5rem;
+}
+
+.input-box-dark
+{
+  width: 4rem !important;
+  height: 4rem;
+  color: white;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  background: gray;
+  margin: 0 1rem ;
+  outline: none;
+  border-radius: .5rem;
 }

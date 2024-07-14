@@ -47,7 +47,7 @@ import { LiaUploadSolid } from "react-icons/lia";
 
 
 function Content() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [userVideos, setUserVideos] = useState([]);
   const [sortByDateAsc, setSortByDateAsc] = useState(true);
   const [Email, setEmail] = useState();
@@ -100,7 +100,7 @@ function Content() {
   const [isPublished, setIsPublished] = useState(false);
   
 
-  document.title = "Channel content - YouTube Studio";
+  document.title = "Channel content - HGPIPELINE Studio";
 
   //TOASTS
 
@@ -609,7 +609,7 @@ function Content() {
           video: VideoURL
         };
         // Send the POST request
-        const response = await fetch(`http://localhost:3000/add-ads/${Email}`, {
+        const response = await fetch(`https://backend.hgpipeline.com/add-ads/${Email}`, {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -1063,7 +1063,7 @@ function Content() {
             }
           />
           <p>
-            I understand that deleting a video from YouTube is permanent and
+            I understand that deleting a video from HGPIPELINE is permanent and
             cannot be undone.
           </p>
         </div>
@@ -1268,7 +1268,7 @@ function Content() {
                     width="284.44"
                     height="160"
                     src={VideoURL}
-                    title="YouTube video player"
+                    title="HGPIPELINE video player"
                     frameBorder="0"
                     allowFullScreen
                   ></iframe>

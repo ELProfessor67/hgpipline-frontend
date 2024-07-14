@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SearchResults() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { data } = useParams();
   const [myemail, setmyEmail] = useState();
   const [searchedVideoData, setsearchedVideoData] = useState([]);
@@ -56,7 +56,7 @@ function SearchResults() {
     }, 4000);
   }, []);
 
-  document.title = data && data !== undefined ? `${data} - YouTube` : "YouTube";
+  document.title = data && data !== undefined ? `${data} - YouTube` : "HGPIPELINE";
 
   const token = localStorage.getItem("userToken");
 

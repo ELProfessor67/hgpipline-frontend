@@ -11,7 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function LeftPanel2() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
@@ -180,7 +180,7 @@ function LeftPanel2() {
             </p>
             <Tooltip
               TransitionComponent={Zoom}
-              title="View on YouTube"
+              title="View on HGPIPELINE"
               placement="bottom"
             >
               <YouTubeIcon

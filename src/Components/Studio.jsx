@@ -34,7 +34,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 
 function Studio() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [email, setEmail] = useState("");
   const [isChannel, setisChannel] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -69,6 +69,7 @@ function Studio() {
   const [isPublished, setIsPublished] = useState(false);
   const [streamurl, setStreamUrl] = useState("")
   const [streamkey, setStreamKey] = useState("")
+  const [isShort,setIsShort] = useState(false)
   const [streamBoxOpen, setStreanBoxOpen] = useState(false)
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -357,6 +358,12 @@ function Studio() {
         const duration = videoElement.duration; // Duration in seconds
         // console.log("Video duration:", duration);
         setDuration(duration);
+        const width = videoElement.videoWidth;
+        const height = videoElement.videoHeight;
+        const aspectRatio = width / height;
+        const isShort = duration <= 60 && Math.abs(aspectRatio - 9 / 16) < 0.01;
+        console.log(isShort,"isShort")
+        setIsShort(isShort);
 
         uploadTask.on(
           "state_changed",
@@ -434,7 +441,7 @@ function Studio() {
       };
 
       // Proceed with saving the channel data
-      const response = await fetch("http://localhost:3000/savechannel", {
+      const response = await fetch("https://backend.hgpipeline.com/savechannel", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -491,16 +498,31 @@ function Studio() {
       const img = new Image();
       img.onload = function () {
         const aspectRatio = img.width / img.height;
-        if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
-          setSelectedThumbnail(file);
-          setPreviewThumbnail(URL.createObjectURL(file));
-          setIsThumbnailSelected(true);
-        } else {
-          setIsThumbnailSelected(false);
-          setSelectedThumbnail(null);
-          setPreviewThumbnail(null);
-          alert("Please select a 16:9 aspect ratio image.");
+        console.log(img.width,img.height,aspectRatio)
+        if(isShort){
+          if (Math.abs(aspectRatio - 9 / 16) < 0.01) {
+            setSelectedThumbnail(file);
+            setPreviewThumbnail(URL.createObjectURL(file));
+            setIsThumbnailSelected(true);
+          } else {
+            setIsThumbnailSelected(false);
+            setSelectedThumbnail(null);
+            setPreviewThumbnail(null);
+            alert("Please select a 9:16 aspect ratio image for short video.");
+          }
+        }else{
+          if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
+            setSelectedThumbnail(file);
+            setPreviewThumbnail(URL.createObjectURL(file));
+            setIsThumbnailSelected(true);
+          } else {
+            setIsThumbnailSelected(false);
+            setSelectedThumbnail(null);
+            setPreviewThumbnail(null);
+            alert("Please select a 16:9 aspect ratio image.");
+          }
         }
+       
       };
       img.src = URL.createObjectURL(file);
     } else {
@@ -569,9 +591,10 @@ function Studio() {
           video_duration: duration,
           publishDate: currentDate,
           Visibility: visibility,
+          isShort
         };
         // Send the POST request
-        const response = await fetch("http://localhost:3000/publish", {
+        const response = await fetch("https://backend.hgpipeline.com/publish", {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -622,7 +645,7 @@ function Studio() {
           Visibility: visibility,
         };
         // Send the POST request
-        const response = await fetch("http://localhost:3000/go-live", {
+        const response = await fetch("https://backend.hgpipeline.com/go-live", {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
@@ -689,7 +712,7 @@ function Studio() {
           <VideoCallOutlinedIcon
             className=""
             fontSize="large"
-            style={{ color: "#FF4E45" }}
+            style={{ color: "#20ff49" }}
           />
           <p className={theme ? "" : "text-light-mode"}>CREATE</p>
         </div>
@@ -697,15 +720,18 @@ function Studio() {
         <div
           className={theme ? "create-btn" : "create-btn create-btn-light"}
           onClick={() => setIsLiveClicked(true)}
-          style={isChannel === true ? { display: "flex", right: "10%" } : { display: "none" }}
+          style={isChannel === true ? { display: "flex", right: "15%" } : { display: "none" }}
         >
           <VideoCallOutlinedIcon
             className=""
             fontSize="large"
-            style={{ color: "#FF4E45" }}
+            style={{ color: "#20ff49" }}
           />
           <p className={theme ? "" : "text-light-mode"}>GO LIVE</p>
         </div>
+
+        
+
         <div
           style={
             myVideos && myVideos.message === "USER DOESN'T EXIST"
@@ -742,7 +768,7 @@ function Studio() {
           />
           <p className="channel-head">Create Your Channel</p>
           <p className={theme ? "channel-slogan" : "channel-slogan text-light-mode2"}>
-            Share Your Story: Inspire and Connect with a YouTube Channel!
+            Share Your Story: Inspire and Connect with a HGPIPELINE Channel!
           </p>
           <form onSubmit={saveChannelData} className="channel-deatils">
             <div className="profile-pic-section">
@@ -1081,7 +1107,7 @@ function Studio() {
                   <input
                     type="text"
                     className={theme ? "video-tags" : "video-tags light-mode"}
-                    placeholder="Tags"
+                    placeholder="Hash Tags like #example"
                     onChange={(e) => setVideoTags(e.target.value)}
                   />
                 </div>
@@ -1168,7 +1194,7 @@ function Studio() {
                     width="284.44"
                     height="160"
                     src={VideoURL}
-                    title="YouTube video player"
+                    title="HGPIPELINE video player"
                     frameBorder="0"
                     allowFullScreen
                   ></iframe>
@@ -1441,7 +1467,7 @@ function Studio() {
                   <input
                     type="text"
                     className={theme ? "video-tags" : "video-tags light-mode"}
-                    placeholder="Tags"
+                     placeholder="Hash Tags like #example"
                     onChange={(e) => setVideoTags(e.target.value)}
                   />
                 </div>

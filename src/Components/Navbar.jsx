@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 function Navbar() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { data } = useParams();
   const [data2, setData] = useState(data);
   const [isbtnClicked, setisbtnClicked] = useState(false);
@@ -55,23 +55,23 @@ function Navbar() {
 
   useEffect(() => {
     const handler = (e) => {
-      if (!profileRef.current.contains(e.target)) {
+      if (!profileRef.current?.contains(e.target)) {
         setShowPop(false);
       }
     };
 
     document.addEventListener("mousedown", handler);
-  }, []);
+  }, [profileRef]);
 
   useEffect(() => {
     const handler = (e) => {
-      if (!searchRef.current.contains(e.target)) {
+      if (!searchRef.current?.contains(e.target)) {
         setNewSearch(false);
       }
     };
 
     document.addEventListener("mousedown", handler);
-  }, []);
+  }, [searchRef]);
 
   useEffect(() => {
     const getData = async () => {
@@ -170,7 +170,7 @@ function Navbar() {
             />
             <IoIosSearch
               className={theme ? "search-icon" : "search-light-icon"}
-              fontSize="28px"
+              fontSize="50px"
               style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
               onClick={() => {
                 if (searchedData) {
@@ -196,12 +196,12 @@ function Navbar() {
           />
           <Tooltip
             TransitionComponent={Zoom}
-            title="YouTube studio"
+            title="HGPIPELINE studio"
             placement="bottom"
           >
             <AiOutlineVideoCameraAdd
               className={theme ? "icon-btns videocreate" : "video-light"}
-              fontSize="24px"
+              fontSize="40px"
               style={{ color: theme ? "white" : "black" }}
               onClick={() => {
                 if (token) {
@@ -218,6 +218,7 @@ function Navbar() {
             onClick={() => {
               if (isbtnClicked === false) {
                 setisbtnClicked(true);
+                setisSwitched(true);
                 document.body.classList.add("bg-css");
               } else {
                 setisbtnClicked(false);

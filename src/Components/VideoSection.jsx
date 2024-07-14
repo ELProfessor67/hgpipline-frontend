@@ -35,11 +35,40 @@ import "react-toastify/dist/ReactToastify.css";
 import LeftPanel from "./LeftPanel";
 import Error from "./Error";
 import axios from "axios";
-import { FaPlay,FaForwardFast } from "react-icons/fa6";
+import { FaPlay, FaForwardFast } from "react-icons/fa6";
 import HLS from "hls.js"
 
+
+
+
+function AdsTimer() {
+  const [second, setSecond] = useState(5);
+
+  useEffect(() => {
+    const ref = setInterval(() => {
+      if (second <= 0) {
+        clearInterval(ref);
+        return
+      }
+      setSecond(prev => {
+        if (prev > 0) {
+          return prev - 1;
+        }
+        return 0
+      });
+    }, 1000);
+
+    return () => clearInterval(ref)
+  }, [])
+  return (
+    <button className="skip-btn">
+      skip in {second}
+    </button>
+  )
+}
+
 function VideoSection() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://backend.hgpipeline.com";
   const { id } = useParams();
   const [videoData, setVideoData] = useState(null);
   const [email, setEmail] = useState();
@@ -66,14 +95,14 @@ function VideoSection() {
   const [seeDesc, setSeeDesc] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
   const [commentOpacity, setCommentOpacity] = useState(1);
-  
+
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
 
 
-  
+
 
   //EXTRAS
 
@@ -108,6 +137,7 @@ function VideoSection() {
   const [youtubeChannelID, setyoutubeChannelID] = useState();
   const [isSubscribed, setIsSubscribed] = useState();
   const [Subscribers, setSubscribers] = useState();
+  const [showRecommendation, setShowRecommendation] = useState();
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -311,11 +341,11 @@ function VideoSection() {
       try {
         const token = localStorage.getItem("userToken");
         let email = null;
-        if(token){
+        if (token) {
           email = jwtDecode(token).email;
         }
         const response = await fetch(
-          `http://localhost:3000/getvideos?email=${email}`
+          `https://backend.hgpipeline.com/getvideos?email=${email}`
         );
         const {
           thumbnailURLs,
@@ -358,7 +388,7 @@ function VideoSection() {
   }, [plyrInitialized, videoData]);
 
 
-  async function getLikes () {
+  async function getLikes() {
     try {
       if (id !== undefined) {
         const response = await fetch(
@@ -373,17 +403,17 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
 
     getLikes()
     // const interval = setInterval(getLikes, 2000);
 
     // return () => clearInterval(interval);
-    
+
   }, [id]);
 
 
-  async function LikeExists () {
+  async function LikeExists() {
     try {
       if (id !== undefined && email !== undefined) {
         const response = await fetch(
@@ -402,17 +432,17 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     LikeExists()
     // const interval = setInterval(LikeExists, 500);
 
     // return () => clearInterval(interval);
-    
-   
+
+
   }, [email, id]);
 
 
-  async function getCommentLikes () {
+  async function getCommentLikes() {
     try {
       if (id !== undefined) {
         const response = await fetch(
@@ -427,17 +457,17 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     getCommentLikes()
     // const interval = setInterval(CommentLikes, 5000);
 
     // return () => clearInterval(interval);
-    
+
   }, [id]);
 
 
 
-  async function getWatchlater ()  {
+  async function getWatchlater() {
     try {
       if (id !== undefined && email !== undefined) {
         const response = await fetch(
@@ -456,17 +486,17 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     getWatchlater()
     // const interval = setInterval(getWatchlater, 10000);
 
     // return () => clearInterval(interval);
-    
+
   });
 
 
 
-  async function getComments (){
+  async function getComments() {
     try {
       if (id !== undefined) {
         const response = await fetch(
@@ -481,7 +511,7 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     getComments()
     // const interval = setInterval(getComments, 5000);
 
@@ -566,12 +596,12 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     checkSubscription()
     // const interval = setInterval(checkSubscription, 5000);
 
     // return () => clearInterval(interval);
- 
+
   }, [channelID, email]);
 
   useEffect(() => {
@@ -593,7 +623,7 @@ function VideoSection() {
   }, [usermail]);
 
 
-  async function getPlaylists  () {
+  async function getPlaylists() {
     try {
       if (email !== undefined) {
         const response = await fetch(
@@ -608,12 +638,12 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     getPlaylists()
     // const interval = setInterval(getPlaylists, 10000);
 
     // return () => clearInterval(interval);
-   
+
   }, [email]);
 
   useEffect(() => {
@@ -637,7 +667,7 @@ function VideoSection() {
   }, [email, id]);
 
 
-  async function getHeartComments ()  {
+  async function getHeartComments() {
     try {
       if (id !== undefined) {
         const response = await fetch(
@@ -652,7 +682,7 @@ function VideoSection() {
   };
 
   useEffect(() => {
-    
+
     getHeartComments()
     // const interval = setInterval(getHeartComments, 7000);
 
@@ -667,21 +697,21 @@ function VideoSection() {
 
 
 
-  async function increaseViews (){
-    await axios.put(`${backendURL}/update-ads/${ads?._id}`,{views: true})
+  async function increaseViews() {
+    await axios.put(`${backendURL}/update-ads/${ads?._id}`, { views: true })
   }
   // // check ads show or not 
   useEffect(() => {
-    if(ads?.title){
+    if (ads?.title) {
       const random = Math.floor(Math.random() * 2);
-      
+
       if (random) {
-        
+
         setShowAds(true);
         increaseViews();
-        
+
       } else {
-        
+
         setShowAds(false);
       }
     }
@@ -708,28 +738,28 @@ function VideoSection() {
   useEffect(() => {
     const setIntervalRef = setInterval(() => {
       const adsRefById = document.getElementById("ads");
-      
-      if(adsRefById){
-        adsRefById.addEventListener('ended',() => {
+
+      if (adsRefById) {
+        adsRefById.addEventListener('ended', () => {
           setShowAds(false);
-        },false)
-        adsRefById.addEventListener('play',() => {
+        }, false)
+        adsRefById.addEventListener('play', () => {
           setAdsPlay(true);
-        },false)
+        }, false)
 
-        adsRefById.addEventListener('timeupdate', function() {
+        adsRefById.addEventListener('timeupdate', function () {
 
-          console.log(adsRefById.currentTime,"time")
-          if (adsRefById.currentTime >= 20) {
-              console.log('Event triggered at 20:00');
-              setShowAdsSkip(true);
-              adsRefById.removeEventListener('timeupdate', arguments.callee); // Remove event to avoid multiple triggers
+          console.log(adsRefById.currentTime, "time")
+          if (adsRefById.currentTime >= 5) {
+            console.log('Event triggered at 20:00');
+            setShowAdsSkip(true);
+            adsRefById.removeEventListener('timeupdate', arguments.callee); // Remove event to avoid multiple triggers
           }
         });
         clearInterval(setIntervalRef);
       }
-    },10)
-  },[])
+    }, 10)
+  }, [])
 
 
   const playAds = () => {
@@ -771,7 +801,7 @@ function VideoSection() {
       getComments();
       getHeartComments()
       getCommentLikes()
-      
+
     } catch (error) {
       //console.log(error.message);
     }
@@ -866,30 +896,30 @@ function VideoSection() {
     isLive,
     streamKey,
     HLS_URL
-    
+
   } = matchedVideo;
- 
+
   //live video play
   const video = document.getElementById("video");
-  if(video && isLive){
-    if(HLS.isSupported()){
+  if (video && isLive) {
+    if (HLS.isSupported()) {
       var hls = new HLS({
         startPosition: -1
       });
       hls.loadSource(HLS_URL);
       hls.attachMedia(video);
 
-      hls.on(HLS.Events.MANIFEST_PARSED,function(){
+      hls.on(HLS.Events.MANIFEST_PARSED, function () {
         video.play()
       })
 
 
-      hls.on(HLS.Events.ERROR,function(event,data){
+      hls.on(HLS.Events.ERROR, function (event, data) {
         var errorType = data.type;
         var errorDeatils = data.details;
         var errorFatal = data.fatal;
-        if(errorFatal){
-          switch(errorType){
+        if (errorFatal) {
+          switch (errorType) {
             case HLS.ErrorTypes.NETWORK_ERROR:
               console.log("fatal network error encountered, try to recovery")
               hls.startLoad();
@@ -904,13 +934,13 @@ function VideoSection() {
           }
         }
       })
-    }else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = videoSrc;
     }
   }
 
   document.title =
-    Title && Title !== undefined ? `${Title} - YouTube` : "YouTube";
+    Title && Title !== undefined ? `${Title} - YouTube` : "HGPIPELINE";
 
   const likeVideo = async () => {
     try {
@@ -1057,7 +1087,7 @@ function VideoSection() {
         }
 
         getWatchlater()
-      
+
       }
     } catch (error) {
       //console.log(error.message);
@@ -1246,11 +1276,16 @@ function VideoSection() {
 
 
 
-const openLink = async (link) => {
-  await axios.put(`${backendURL}/update-ads/${ads?._id}`,{click: true})
+  const openLink = async (link) => {
+    await axios.put(`${backendURL}/update-ads/${ads?._id}`, { click: true })
 
-  window.open(ads?.link);
-}
+    window.open(ads?.link);
+  }
+
+
+  const handleVideoEnd = () => {
+    setShowRecommendation(true);
+  }
 
 
 
@@ -1285,28 +1320,33 @@ const openLink = async (link) => {
                   {
                     !adsplay &&
                     <button className="play-btn" onClick={playAds}>
-                      <FaPlay color="white" size={30}/>
+                      <FaPlay color="white" size={30} />
                     </button>
                   }
 
                   <div className="ads-description">
                     <div title={ads?.description}>
-                      <p>{ads?.title}</p>
-                      <p style={{opacity: 0.5,marginTop: '.2rem'}}>{ads?.link}</p>
+                      <p>{ads?.title?.slice(0, 20)}</p>
+                      <p style={{ opacity: 0.5, marginTop: '.2rem' }}>{ads?.link}</p>
                     </div>
-                    
-                    <button onClick={() => openLink(ads?.link)} style={{textDecoration: "none",marginTop: "4rem"}} target="_zeeshan">OPEN</button>
+
+                    <button onClick={() => openLink(ads?.link)} style={{ textDecoration: "none", marginTop: "4rem" }} target="_zeeshan">OPEN</button>
 
                   </div>
 
                   {
-                    showAdsSkip && 
+                    !showAdsSkip && adsplay &&
+                    <AdsTimer />
+                  }
+
+                  {
+                    showAdsSkip &&
                     <button className="skip-btn" onClick={() => setShowAds(false)}>
-                        skip
-                        <FaForwardFast/>
+                      skip
+                      <FaForwardFast />
                     </button>
                   }
-                  
+
                 </div>
               </div>
               :
@@ -1318,8 +1358,68 @@ const openLink = async (link) => {
                   src={videoURL}
                   id="video"
                   autoPlay
+                  ref={videoRef}
+                  onEnded={handleVideoEnd}
+                  onPlay={() => setShowRecommendation(false)}
                 >
                 </video>
+
+                {
+                  showRecommendation &&
+                  <>
+                    {
+                      thumbnails && typeof thumbnails == 'object' &&
+                      (() => {
+                        const index = Math.floor(Math.random() * thumbnails.length-1);
+                        return(
+                          <div className="videorecom left" onClick={() => window.location.href = `/video/${VideoID[index]}`}>
+                        <div>
+                          <img src={thumbnails[index]} />
+                          <div className="overlay"></div>
+                          <p>{Titles[index]}</p>
+                          <span>
+                            {Math.floor(duration[index] / 60) +
+                              ":" +
+                              (Math.round(duration[index] % 60) < 10
+                                ? "0" + Math.round(duration[index] % 60)
+                                : Math.round(duration[index] % 60))}
+                          </span>
+                        </div>
+                      </div>
+                        )
+                      })()
+                      
+                      
+                    }
+
+{
+                      thumbnails && typeof thumbnails == 'object' &&
+                      (() => {
+                        const index = Math.floor(Math.random() * thumbnails.length-1);
+                        return(
+                          <div className="videorecom right" onClick={() => window.location.href = `/video/${VideoID[index]}`}>
+                        <div>
+                          <img src={thumbnails[index]} />
+                          <div className="overlay"></div>
+                          <p>{Titles[index]}</p>
+                          <span>
+                            {Math.floor(duration[index] / 60) +
+                              ":" +
+                              (Math.round(duration[index] % 60) < 10
+                                ? "0" + Math.round(duration[index] % 60)
+                                : Math.round(duration[index] % 60))}
+                          </span>
+                        </div>
+                      </div>
+                        )
+                      })()
+                      
+                      
+                    }
+
+                  </>
+                }
+
               </div>
           }
           {/* <div className="videoframe">
@@ -2497,6 +2597,14 @@ const openLink = async (link) => {
                 From {uploader}
               </p>
             </div>
+          </div>
+
+          <div className="ads-container">
+            <div>
+              <h3>{ads?.title.slice(0, 30)}</h3>
+              <p>{ads?.link}</p>
+            </div>
+            <a href={ads?.link}>Learn More</a>
           </div>
           <div
             className="video-section2"

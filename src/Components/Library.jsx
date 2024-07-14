@@ -31,7 +31,7 @@ function generateRandomColors(count) {
 }
 
 function Library() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [watchlater, setWatchLater] = useState([]);
   const [PlaylistData, setPlaylistData] = useState([]);
   const [playlistColors, setPlaylistColors] = useState([]);
@@ -46,13 +46,14 @@ function Library() {
     return menu ? JSON.parse(menu) : false;
   });
   const [savedPlaylist, setSavedPlaylist] = useState([]);
-  document.title = "Library - YouTube";
+  document.title = "Library - HGPIPELINE";
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
 
   useEffect(() => {
+   
     setEmail(jwtDecode(token).email);
   }, [token]);
 
@@ -127,7 +128,9 @@ function Library() {
       }
     };
 
-    getLikeVideos()
+    if(email){
+      getLikeVideos()
+    }
   }, [email]);
 
   useEffect(() => {
@@ -224,6 +227,9 @@ function Library() {
     videolike && videolike.length > 0 && videolike !== "NO DATA"
       ? videolike.slice(0, 6) // Get the first four elements if available
       : [];
+
+
+  console.log(videolike,"LikedVideosArray")
 
   if (
     PlaylistData === "No playlists available..." &&
@@ -884,7 +890,7 @@ function Library() {
             </div>
             <div className="watchlater-library-videos">
               {LikedVideosArray &&
-                LikedVideosArray.map((element, index) => {
+                LikedVideosArray?.map((element, index) => {
                   return (
                     <div className="thiswatchlater-videoss" key={index}>
                       <Skeleton

@@ -7,7 +7,7 @@ import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
 
 function Customization() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [currentTab, setCurrentTab] = useState("branding");
   const [email, setEmail] = useState();
   const [channelID, setChannelID] = useState();
@@ -21,7 +21,7 @@ function Customization() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  document.title = "Channel customization - YouTube Studio";
+  document.title = "Channel customization - HGPIPELINE Studio";
 
   useEffect(() => {
     const handleMenuButtonClick = () => {

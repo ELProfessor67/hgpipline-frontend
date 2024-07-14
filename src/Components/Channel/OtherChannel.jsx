@@ -23,7 +23,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function OtherChannel() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { id } = useParams();
   const [Email, setEmail] = useState();
   const [newEmail, setnewEmail] = useState();
@@ -108,8 +108,8 @@ function OtherChannel() {
 
   document.title =
     channelName && channelName !== undefined
-      ? `${channelName} - YouTube`
-      : "YouTube";
+      ? `${channelName} - HGPIPELINE`
+      : "HGPIPELINE";
 
   useEffect(() => {
     const getChannelCover = async () => {

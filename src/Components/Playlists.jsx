@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Playlists() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { id } = useParams();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -152,8 +152,8 @@ function Playlists() {
 
   document.title =
     PlaylistName && PlaylistName !== undefined
-      ? `${PlaylistName} - YouTube`
-      : "YouTube";
+      ? `${PlaylistName} - HGPIPELINE`
+      : "HGPIPELINE";
 
   useEffect(() => {
     const handleMenuButtonClick = () => {

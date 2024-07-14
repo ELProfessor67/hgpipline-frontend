@@ -18,7 +18,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function VideoComments() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const { id } = useParams();
   const [Email, setEmail] = useState();
   const [videoComments, setVideoComments] = useState([]);
@@ -34,7 +34,7 @@ function VideoComments() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  document.title = "Video comments - YouTube Studio";
+  document.title = "Video comments - HGPIPELINE Studio";
 
   useEffect(() => {
     const handleMenuButtonClick = () => {

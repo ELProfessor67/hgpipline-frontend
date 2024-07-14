@@ -14,7 +14,7 @@ import Zoom from "@mui/material/Zoom";
 import {SiYoutubestudio} from "react-icons/si"
 
 function AccountPop() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
@@ -161,7 +161,7 @@ function AccountPop() {
               fontSize="21px"
               style={{ color: theme ? "white" : "black" }}
             />
-            <p>YouTube Studio</p>
+            <p>HGPIPELINE Studio</p>
           </div>
           <div
             className={theme ? "apperance c-sec" : "apperance c-sec2"}

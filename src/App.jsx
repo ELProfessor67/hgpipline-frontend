@@ -22,9 +22,30 @@ import ytLogo from "./img/icon.png";
 
 import "react-toastify/dist/ReactToastify.css";
 import AddAds from "./Components/dashboard/AddAds";
+import "./App.css"
+import ShortVideoPhone from "./Components/ShortVideoPhone";
+import { useEffect, useState } from "react";
+import ShortVideoPC from "./Components/ShortVideoPC";
 
 function App() {
   const token = localStorage.getItem("userToken");
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 600px)'); // Adjust the width as per your requirement
+
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    handleMediaQueryChange(mediaQuery); // Initial check
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
 
   return (
     <>
@@ -82,6 +103,7 @@ function App() {
           <Route path="/trending" element={<Trending />} />
           <Route path="/results/:data" element={<SearchResults />} />
           <Route path="/playlist/:id" element={<Playlists />} />
+          <Route path="/short" element={isMobile ? <ShortVideoPhone/>: <ShortVideoPC/>} />
           <Route
             path="/subscriptions"
             element={token ? <Subscriptions /> : <Error />}
@@ -89,6 +111,7 @@ function App() {
           <Route path="/video/:id" element={<VideoSection />} />
 
           {/* dashbaord  */}
+          <Route path="/dashboard/add-ads" element={<AddAds/>}/>
           <Route path="/dashboard/add-ads" element={<AddAds/>}/>
           <Route path="/*" element={<Error />} />
         </Routes>

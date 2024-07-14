@@ -9,17 +9,25 @@ import LeftPanel from "./LeftPanel";
 import Navbar from "./Navbar";
 import "../Css/theme.css";
 import jwtDecode from "jwt-decode";
-import {CiStreamOn} from 'react-icons/ci'
+import { CiStreamOn } from 'react-icons/ci'
+import axios from "axios";
+import { Link } from "react-router-dom";
+import darkbanner from '../img/bannerdark.png'
+import lightbanner from '../img/bannerlight.png'
+import darknovideo from '../img/no-video.jpg'
+import lightnovideo from '../img/no-video2.png'
+
+
 
 function Browse() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [thumbnails, setThumbnails] = useState([]);
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
-  const [isLives,setIsLives] = useState([])
+  const [isLives, setIsLives] = useState([])
   const [Visibility, setVisibility] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -30,6 +38,7 @@ function Browse() {
   const [TagsSelected, setTagsSelected] = useState("All");
   const [publishDate, setPublishDate] = useState();
   const [FilteredVideos, setFilteredVideos] = useState([]);
+  const [ads, setAds] = useState()
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -41,6 +50,10 @@ function Browse() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
+
+
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -82,22 +95,50 @@ function Browse() {
 
   const Tags = [
     "All",
+    "Exercise",
+    "Sports",
+    "Podcast",
+    "Christian movies",
+    "Christian music videos",
+    "Worship",
+    "Praise",
+    "live events",
     "Artificial Intelligence",
-    "Comedy",
-    "Gaming",
-    "Vlog",
     "Beauty",
     "Travel",
     "Food",
     "Fashion",
+    "Vlog"
+
   ];
+
+  useEffect(() => {
+    async function getAds() {
+      try {
+        const token = localStorage.getItem("userToken");
+        let email = null;
+        if (token) {
+          email = jwtDecode(token).email;
+        }
+        const res = await axios.get(`${backendURL}/get-ads?email=${email}`);
+        setAds(res.data.ads);
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    getAds()
+  }, [])
+
+
+  console.log(ads,'ads')
 
   useEffect(() => {
     const getVideos = async () => {
       try {
         const token = localStorage.getItem("userToken");
         let email = null;
-        if(token){
+        if (token) {
           email = jwtDecode(token).email;
         }
 
@@ -139,14 +180,12 @@ function Browse() {
   useEffect(() => {
     if (TagsSelected !== "All") {
       const tagsSelectedLower = TagsSelected.toLowerCase();
-      const filteredVideos = VideoData.flatMap((item) =>
-        item.VideoData.filter(
-          (element) =>
-            element.Tags.toLowerCase().includes(tagsSelectedLower) ||
-            element.Title.toLowerCase().includes(tagsSelectedLower)
-        )
-      );
+      const filteredVideos = VideoData.filter(item =>
+        item.Tags.toLowerCase().includes(tagsSelectedLower) ||
+        item.Title.toLowerCase().includes(tagsSelectedLower)
+      )
       setFilteredVideos(filteredVideos);
+      // console.log(VideoData,"filteredVideos")
     } else {
       setFilteredVideos([]);
     }
@@ -185,6 +224,8 @@ function Browse() {
     }
   };
 
+  console.log(theme,'theme')
+
   return (
     <>
       <Navbar />
@@ -205,6 +246,14 @@ function Browse() {
             }
             style={menuClicked === false ? { left: "74px" } : { left: "250px" }}
           >
+
+            <Skeleton
+              count={1}
+              width={"93%"}
+              height={200}
+              style={{ borderRadius: "5px", marginTop: "40px", marginLeft: "3rem" }}
+              className="sk-browse-profile"
+            />
             <div
               className={
                 theme ? "popular-categories" : "popular-categories light-mode"
@@ -214,19 +263,17 @@ function Browse() {
                 return (
                   <div
                     className={
-                      TagsSelected === element
-                        ? `top-tags ${theme ? "tag-color" : "tag-color-light"}`
-                        : `top-tags ${theme ? "" : "tagcolor-newlight"}`
+                      `top-tags ${theme ? "" : "tagcolor-newlight"}`
                     }
                     key={index}
                   >
-                    <p
-                      onClick={() => {
-                        setTagsSelected(`${element}`);
-                      }}
-                    >
-                      {element}
-                    </p>
+                    <Skeleton
+                      count={1}
+                      width={100}
+                      height={20}
+                      style={{ borderRadius: "5px" }}
+                      className="sk-browse-profile"
+                    />
                   </div>
                 );
               })}
@@ -295,6 +342,12 @@ function Browse() {
           }
           style={menuClicked === false ? { left: "74px " } : { left: "250px " }}
         >
+          <Link to={ads?.link} className="add-goes-here">
+            {/* <video src={ads?.video} poster={theme ? darkbanner : lightbanner} muted >
+
+            </video> */}
+            <img src={theme ? darkbanner : lightbanner}/>
+          </Link>
           <div
             className={
               theme ? "popular-categories" : "popular-categories light-mode"
@@ -333,13 +386,13 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                      paddingRight: "50px",
-                      display: TagsSelected === "All" ? "grid" : "none",
-                    }
+                    paddingRight: "50px",
+                    display: TagsSelected === "All" ? "grid" : "none",
+                  }
                   : {
-                      paddingRight: "0px",
-                      display: TagsSelected === "All" ? "grid" : "none",
-                    }
+                    paddingRight: "0px",
+                    display: TagsSelected === "All" ? "grid" : "none",
+                  }
               }
             >
               {thumbnails &&
@@ -369,10 +422,11 @@ function Browse() {
                         src={element}
                         alt="thumbnails"
                         className="browse-thumbnails"
+                        loading="lazy"
                       />
                       {
                         isLives[index] &&
-                        <div className="live-btn"><CiStreamOn size={25}/>Live</div>
+                        <div className="live-btn"><CiStreamOn size={25} />Live</div>
                       }
                       <p className="duration">
                         {Math.floor(duration[index] / 60) +
@@ -443,10 +497,10 @@ function Browse() {
                               {VideoViews[index] >= 1e9
                                 ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
                                 : VideoViews[index] >= 1e6
-                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                : VideoViews[index] >= 1e3
-                                ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                : VideoViews[index]}{" "}
+                                  ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                  : VideoViews[index] >= 1e3
+                                    ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                    : VideoViews[index]}{" "}
                               views
                             </p>
                             <p
@@ -500,23 +554,23 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                      paddingRight: "50px",
-                      display: TagsSelected !== "All" ? "grid" : "none",
-                    }
+                    paddingRight: "50px",
+                    display: TagsSelected !== "All" ? "grid" : "none",
+                  }
                   : {
-                      paddingRight: "0px",
-                      display: TagsSelected !== "All" ? "grid" : "none",
-                    }
+                    paddingRight: "0px",
+                    display: TagsSelected !== "All" ? "grid" : "none",
+                  }
               }
             >
-              {FilteredVideos &&
+              {FilteredVideos && FilteredVideos.length != 0 ?
                 FilteredVideos.map((element, index) => {
                   return (
                     <div
                       className="video-data"
                       key={index}
                       style={
-                        element.visibility === "Public"
+                        element?.visibility === "Public"
                           ? { display: "block" }
                           : { display: "none" }
                       }
@@ -595,10 +649,10 @@ function Browse() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
                               views
                             </p>
                             <p
@@ -645,7 +699,17 @@ function Browse() {
                       </div>
                     </div>
                   );
-                })}
+                })
+                :
+                (
+                  <div style={{width: "85vw",display: 'flex',justifyContent: 'center'}}>
+                    <img src={theme ? darknovideo : lightnovideo} width="200"/>
+                  </div>
+                )
+              
+              }
+
+              
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function Subscriptions() {
-  const backendURL = "http://localhost:3000"
+  const backendURL = "https://backend.hgpipeline.com"
   const [email, setEmail] = useState();
   const [subscriptions, setSubscriptions] = useState([]);
   const [subsVideos, setSubsVideos] = useState([]);
@@ -25,7 +25,7 @@ function Subscriptions() {
     return Dark ? JSON.parse(Dark) : true;
   });
   const token = localStorage.getItem("userToken");
-  document.title = "Subscriptions - YouTube";
+  document.title = "Subscriptions - HGPIPELINE";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");

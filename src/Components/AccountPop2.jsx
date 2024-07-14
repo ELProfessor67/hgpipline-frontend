@@ -14,7 +14,7 @@ import Zoom from "@mui/material/Zoom";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 function AccountPop() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://backend.hgpipeline.com";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
@@ -137,7 +137,7 @@ function AccountPop() {
               fontSize="medium"
               style={{ color: theme ? "#909090" : "black" }}
             />
-            <p>YouTube</p>
+            <p>HGPIPELINE</p>
           </div>
           <div
             className={

@@ -9,7 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function WatchLater() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://backend.hgpipeline.com";
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -24,7 +24,7 @@ function WatchLater() {
   });
 
   const token = localStorage.getItem("userToken");
-  document.title = "Watch later - YouTube";
+  document.title = "Watch later - HGPIPELINE";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
